@@ -82,6 +82,7 @@ module ActiveModelSerializers
         # on invalid payloads.
         def parse(document, options = {})
           document = document.dup.permit!.to_h if document.is_a?(ActionController::Parameters)
+          document.deep_stringify_keys!
 
           validate_payload(document) do |invalid_document, reason|
             yield invalid_document, reason if block_given?
